@@ -25,7 +25,7 @@ public class ClienteController {
     }
 
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody String email, @RequestParam String password) {
+    public LoginResponse login(@RequestParam String email, @RequestParam String password) {
         return service.login(email, password);
     }
 }
