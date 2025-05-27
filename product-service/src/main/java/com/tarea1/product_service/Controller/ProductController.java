@@ -27,24 +27,6 @@ public class ProductController {
         return productRepository.findAll();
     }
 
-    //Crear un producto
-    /*@PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    public void createProduct(@RequestBody ProductEntity productEntity){
-        productRepository.save(productEntity);
-    }*/
-/*
-    //Crear producto
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> createProduct(@RequestBody ProductEntity productEntity) {
-        // Generar el siguiente ID disponible
-        String newId = generateNextProductId();
-        productEntity.setId(newId);
-
-        productRepository.save(productEntity);
-        return ResponseEntity.ok("Producto creado con ID: " + newId);
-    }*/
 
     // Crear producto
     @PostMapping
@@ -101,6 +83,25 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado.");
         }
     }
+
+    //Crear un producto
+    /*@PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void createProduct(@RequestBody ProductEntity productEntity){
+        productRepository.save(productEntity);
+    }*/
+/*
+    //Crear producto
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> createProduct(@RequestBody ProductEntity productEntity) {
+        // Generar el siguiente ID disponible
+        String newId = generateNextProductId();
+        productEntity.setId(newId);
+
+        productRepository.save(productEntity);
+        return ResponseEntity.ok("Producto creado con ID: " + newId);
+    }*/
 
     /*
     @PatchMapping("/{id}/stock")
