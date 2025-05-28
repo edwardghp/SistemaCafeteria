@@ -16,7 +16,7 @@ public class ClienteController {
 
     @PostMapping
     public Cliente registrar(@RequestBody Cliente cliente) {
-        return service.registrar(cliente.getNombre(), cliente.getEmail(), cliente.getPassword());
+        return service.registrar(cliente.getNombre(), cliente.getApellido(), cliente.getEmail(), cliente.getPassword());
     }
 
     @GetMapping("/{id}")

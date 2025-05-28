@@ -5,7 +5,7 @@ import com.tarea1.cliente_service.model.LoginResponse;
 import org.springframework.stereotype.Service;
 
 public interface ClienteService {
-    Cliente registrar(String nombre, String email, String password);
+    Cliente registrar(String nombre,String apellido, String email, String password);
     Cliente obtenerPorId(Long id);
     LoginResponse login(String email, String password);
 }

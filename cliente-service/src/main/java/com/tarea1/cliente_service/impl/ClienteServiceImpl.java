@@ -19,8 +19,8 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Cliente registrar(String nombre, String email, String password) {
-        Cliente cliente = ClienteFactory.crearCliente(nombre, email, password);
+    public Cliente registrar(String nombre, String apellido, String email, String password) {
+        Cliente cliente = ClienteFactory.crearCliente(nombre,apellido, email, password);
         return repository.save(cliente);
     }
 

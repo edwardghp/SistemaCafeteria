@@ -17,7 +17,7 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/products/**").permitAll()
-                .requestMatchers("/api/products/**/stock").hasRole("STAFF")
+                .requestMatchers("/api/products/**/stock").hasRole("PERSONAL")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();

@@ -68,7 +68,7 @@ public class ProductController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    // Actualizar stock (solo STAFF)
+    // Actualizar stock (solo PERSONAL)
     @PatchMapping("/{id}/stock")
     @PreAuthorize("hasRole('PERSONAL')")
     public ResponseEntity<String> updateProductStock(@PathVariable String id, @RequestParam int stock) {
