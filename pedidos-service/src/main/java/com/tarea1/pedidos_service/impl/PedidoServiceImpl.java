@@ -17,6 +17,10 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class PedidoServiceImpl implements PedidoService {
     private final PedidoRepository repo;
@@ -36,11 +40,11 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     @CircuitBreaker(name = "clienteService", fallbackMethod = "fallbackCrearPedido")
     @Retry(name = "clienteService")
-    public PedidoResponse crearPedido(Long clienteId, String productoId) {
+    public PedidoResponse crearPedido(Long clienteId, List<String> productosId) {
         clienteClient.obtenerCliente(clienteId); // lanza excepción si no existe
-        productoClient.obtenerProducto(productoId); // igual
+        productosId.forEach(productoClient::obtenerProducto); // Verifica todos
 
-        Pedido nuevo = new Pedido(null, clienteId, productoId, null, null);
+        Pedido nuevo = new Pedido(null, clienteId, productosId, PedidoEstado.PENDIENTE, LocalDateTime.now());
         Pedido creado = new CrearPedidoCommand(nuevo).ejecutar(repo);
 
         publisher.publicar(creado);
@@ -52,7 +56,12 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public Pedido cambiarEstado(Long id, PedidoEstado nuevoEstado) {
+    public Optional<Pedido> obtenerPedido(String id) {
+        return repo.findById(id);
+    }
+
+    @Override
+    public Pedido cambiarEstado(String id, PedidoEstado nuevoEstado) {
         Pedido pedido = repo.findById(id).orElseThrow(() -> new PedidoException("No existe el pedido"));
         new ValidarCancelacionStrategy().validarCambio(pedido, nuevoEstado); // ejemplo
         pedido.setEstado(nuevoEstado);

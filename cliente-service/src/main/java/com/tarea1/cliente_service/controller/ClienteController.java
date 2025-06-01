@@ -3,6 +3,7 @@ package com.tarea1.cliente_service.controller;
 import com.tarea1.cliente_service.ClienteService;
 import com.tarea1.cliente_service.model.Cliente;
 import com.tarea1.cliente_service.model.LoginResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +23,13 @@ public class ClienteController {
     @GetMapping("/{id}")
     public Cliente obtener(@PathVariable Long id) {
         return service.obtenerPorId(id);
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Cliente> obtenerPorEmail(@PathVariable String email) {
+        return service.findByEmail(email)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/login")

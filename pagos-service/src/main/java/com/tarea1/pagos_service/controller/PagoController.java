@@ -1,7 +1,6 @@
 package com.tarea1.pagos_service.controller;
-
-import com.tarea1.pagos_service.PagoService;
-import com.tarea1.pagos_service.model.Pago;
+import com.tarea1.pagos_service.modelo.Pago;
+import com.tarea1.pagos_service.servicio.PagoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,14 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/pagos")
+@RequestMapping("/pagos")
 public class PagoController {
-    private final PagoService service;
-    public PagoController(PagoService service) { this.service = service; }
+
+    private final PagoService pagoService;
+
+    public PagoController(PagoService pagoService) {
+        this.pagoService = pagoService;
+    }
 
     @PostMapping("/{pedidoId}")
-    public ResponseEntity<Pago> pagar(@PathVariable Long pedidoId) {
-        Pago pago = service.procesarPago(pedidoId);
+    public ResponseEntity<Pago> pagarPedido(@PathVariable String pedidoId) {
+        Pago pago = pagoService.procesarPago(pedidoId);
         return ResponseEntity.ok(pago);
     }
 }

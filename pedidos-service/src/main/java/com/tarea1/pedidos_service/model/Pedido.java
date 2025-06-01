@@ -1,29 +1,64 @@
 package com.tarea1.pedidos_service.model;
 
-import jakarta.persistence.*;
+
 import lombok.*;
-import jakarta.persistence.Id;
-
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Entity
+@Document(collection = "pedidos")
 @Data
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "pedidos")
 public class Pedido {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private String id;
     private Long clienteId;
-    private String productoId;
-
-    @Enumerated(EnumType.STRING)
+    private List<String> productosId;
     private PedidoEstado estado;
-
     private LocalDateTime fechaCreacion;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Long getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
+    }
+
+    public List<String> getProductosId() {
+        return productosId;
+    }
+
+    public void setProductosId(List<String> productosId) {
+        this.productosId = productosId;
+    }
+
+    public PedidoEstado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(PedidoEstado estado) {
+        this.estado = estado;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
 }

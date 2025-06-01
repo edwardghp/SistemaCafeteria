@@ -5,11 +5,10 @@ import com.tarea1.pedidos_service.model.PedidoEstado;
 import com.tarea1.pedidos_service.model.PedidoResponse;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PedidoService {
-    // Crear un nuevo pedido con cliente y producto
-    PedidoResponse crearPedido(Long clienteId, String productoId);
-
-    // Cambiar el estado de un pedido existente (p. ej. a "CANCELADO")
-    Pedido cambiarEstado(Long id, PedidoEstado nuevoEstado);
+    PedidoResponse crearPedido(Long clienteId, List<String> productosId);
+    Optional<Pedido> obtenerPedido(String id);
+    Pedido cambiarEstado(String id, PedidoEstado nuevoEstado);
 }
